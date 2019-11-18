@@ -21,7 +21,12 @@ async function viewSongsData(data) {
 
     let cont = $('.elemts_cont');
     data.collection.items.forEach(element => {
-        cont.append("<input type='text' value='" + element.data[0].nasa_id + "' />");
+        let elem = "<div class='home_elem'>";
+        elem += "<div class='elem_desc'>" + element.data[0].description + "</div>";
+        elem += "<div class='elem_center'>Center: <strong>" + element.data[0].center + "<strong></div>";
+        elem += "<div class='elem_photo'><img src='" + element.links[0].href + "' /></div>";
+        elem += "</div>";
+        cont.append(elem);
         console.log(element);
     });
 }
