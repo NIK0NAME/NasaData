@@ -19,7 +19,9 @@ $( () => {
 async function viewSongsData(data) {
     console.log(data.collection.items);
 
+    let cont = $('.elemts_cont');
     data.collection.items.forEach(element => {
+        cont.append("<input type='text' value='" + element.data[0].nasa_id + "' />");
         console.log(element);
     });
 }
