@@ -5,28 +5,34 @@ NASA Image and Video Library
 url = https://images-api.nasa.gov
 */
 
-let dataUrl = "https://evilinsult.com/generate_insult.php?lang=en&type=json";
+let apiKey = "api_key=J6nvJcWjfaU1S4gCFd9dzvmVyOmgBSfQEgecT494";
+
+let dataUrl = "https://images-api.nasa.gov/search?q=moon";
 
 let responseData;
 
 $( () => {
     console.log("Todo ready");
-    getSonsgsData();
+    getSonsgsData(dataUrl);
 });
 
 async function viewSongsData(data) {
-    console.log(data);
+    console.log(data.collection.items);
+
+    data.collection.items.forEach(element => {
+        console.log(element);
+    });
 }
 
-async function getSonsgsData() {
+async function getSonsgsData(url) {
     $.ajax({
-        url: dataUrl,
+        url: url,
         crossDomain: true,
          dataType: 'json',
         success: viewSongsData,
-        async: true,
+        async: true/*,
         beforeSend: setHeader,
-        afterSend: setHeader
+        afterSend: setHeader*/
     });
 }
 
