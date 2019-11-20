@@ -26,16 +26,21 @@ async function viewSongsData(data) {
 
     let cont = $('.elemts_cont');
     data.collection.items.forEach(element => {
-        if('href' in element) {
-            let elem = `<div class='home_elem' onclick='loadSingleData("` + element.href + `", "` + element.data[0].description + `")'>`;
-            elem += "<div class='elem_desc'>" + element.data[0].description + "</div>";
-            elem += "<div class='elem_center'>Center: <strong>" + element.data[0].center + "</strong></div>";
-            elem += "<div class='elem_center'>Id: <strong>" + element.data[0].nasa_id + "</strong></div>";
-            elem += "<div class='elem_photo'><img src='" + element.links[0].href + "' /></div>";
+
+        if('data' in element && 'href' in element) {
+            let elem = `<div class='home_elem' onclick='loadSingleData("` + element.href + `", "` + element.data[0].description.replace('"', "'") + `")'>`;
+
+            
+            elem += "<div class='elem_desc'>" + element.data[0].media_type + "</div>";
+            if('links' in element && element.links.length > 0 && 'href' in element.links[0]) {
+                elem += "<div class='elem_desc'>" + element.data[0].description + "</div>";
+                elem += "<div class='elem_center'>Center: <strong>" + element.data[0].center + "</strong></div>";
+                elem += "<div class='elem_center'>Id: <strong>" + element.data[0].nasa_id + "</strong></div>";
+                elem += "<div class='elem_photo'><img src='" + element.links[0].href + "' /></div>";
+            }
+
             elem += "</div>";
-            setTimeout(() => {
-                
-            }, 500);
+
             cont.append(elem);
         }
         //console.log(element);
@@ -57,12 +62,17 @@ async function loadSingleData(url, title) {
             data.forEach(elemnt => {
                 if(elemnt.includes('metadata.json')) {
                     $('.some_metadata').html();
-                }else if(elemnt.includes('.mp4') || elemnt.includes('.mov') ||elemnt.includes('.srt')) {
+                }else if(elemnt.includes('.mp4') || elemnt.includes('.mov')) {
                     let videeo = `
                     <video controls>
                         <source src="`+elemnt+`" type="video/mp4">
                     </video>`;
                     $('.floating_items').append(videeo);
+                }else if(elemnt.includes('.mp3')) {
+                    let audio = `<audio controls>
+                        <source src="`+elemnt+`" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                    </audio>`;
                 }else {
                     let elem = "<img src='" + elemnt +"' />";
                     $('.floating_items').append(elem);

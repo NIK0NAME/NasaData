@@ -140,6 +140,13 @@ body {
     cursor: pointer;
 }
 
+.floating_items {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .floating_items > img {
     text-align: center;
     margin: 10px;
